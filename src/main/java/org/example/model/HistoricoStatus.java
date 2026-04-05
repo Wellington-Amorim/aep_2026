@@ -10,9 +10,9 @@ public class HistoricoStatus {
 
     protected HistoricoStatus() {}
 
-    public HistoricoStatus(StatusSolicitacao status, LocalDateTime data, String responsavel, String comentario) {
+    public HistoricoStatus(StatusSolicitacao status, String responsavel, String comentario) {
         this.status = status;
-        this.data = data;
+        this.data = LocalDateTime.now();
         this.responsavel = responsavel;
         this.comentario = comentario;
     }
