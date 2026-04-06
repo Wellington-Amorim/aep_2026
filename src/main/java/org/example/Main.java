@@ -1,7 +1,7 @@
 package org.example;
 
 import org.example.model.*;
-import util.CarregadorDePersonas;
+import org.example.util.CarregadorDePersonas;
 
 import java.util.List;
 import java.util.Scanner;
@@ -22,7 +22,7 @@ public class Main {
 
         while (usuarioAtual == null) {
             System.out.println("\nComo deseja acessar o sistema?");
-            System.out.println("1. Fazer Cadastro (Novo Usuario)");
+            System.out.println("1. Fazer Cadastro (Novo Cidadao)");
             System.out.println("2. Entrar como Anonimo");
             System.out.println("3. Entrar usando uma Persona de Teste (IHC)");
             System.out.println("0. Sair");
@@ -43,18 +43,19 @@ public class Main {
                     String nome = scanner.nextLine();
                     System.out.print("Digite seu email: ");
                     String email = scanner.nextLine();
-                    usuarioAtual = new Usuario(System.currentTimeMillis(), nome, email, false);
+                    usuarioAtual = new Usuario(System.currentTimeMillis(), nome, email, false, false);
                     System.out.println("Cadastro realizado com sucesso!");
                     break;
                 case 2:
                     System.out.println("\nVoce acessou o modo ANONIMO.");
                     System.out.println("Aviso: Regras mais rigidas de descricao serao aplicadas para evitar trotes.");
-                    usuarioAtual = new Usuario(999L, "CIDADAO ANONIMO", "oculto", true);
+                    usuarioAtual = new Usuario(999L, "CIDADAO ANONIMO", "oculto", true, false);
                     break;
                 case 3:
                     System.out.println("\n--- Selecione uma Persona ---");
                     for (int i = 0; i < personas.size(); i++) {
-                        System.out.println((i + 1) + ". " + personas.get(i).getNome());
+                        String tipo = personas.get(i).isGestor() ? "[GESTOR]" : "[CIDADAO]";
+                        System.out.println((i + 1) + ". " + tipo + " " + personas.get(i).getNome());
                     }
                     System.out.print("Escolha o numero da persona: ");
                     try {
@@ -73,15 +74,19 @@ public class Main {
             }
         }
 
-        System.out.println("\n>>> Logado como: " + usuarioAtual.getNome() + " <<<");
+        System.out.println("\n>>> Logado como: " + usuarioAtual.getNome() + (usuarioAtual.isGestor() ? " (MODO GESTOR)" : " (MODO CIDADAO)") + " <<<");
 
         int opcao = -1;
         while (opcao != 0) {
             System.out.println("\n=== MENU PRINCIPAL ===");
             System.out.println("1. Cadastrar nova solicitacao");
-            System.out.println("2. Consultar solicitacao por protocolo");
-            System.out.println("3. Listar todas as solicitacoes");
-            System.out.println("4. Atualizar status de uma solicitacao (Gestores)");
+            System.out.println("2. Consultar solicitacao por protocolo (Rastreio Cidadao)");
+
+            if (usuarioAtual.isGestor()) {
+                System.out.println("3. Listar TODAS as solicitacoes da cidade (Painel Gestor)");
+                System.out.println("4. Atualizar status de uma solicitacao (Painel Gestor)");
+            }
+
             System.out.println("0. Sair");
             System.out.print("Escolha uma opcao: ");
 
@@ -106,7 +111,8 @@ public class Main {
                         System.out.println("3. Limpeza urbana");
                         System.out.println("4. Saude");
                         System.out.println("5. Seguranca Escolar");
-                        System.out.println("6. Outros (Escrever)");
+                        System.out.println("6. Denuncia de Abuso/Irregularidade");
+                        System.out.println("7. Outros (Escrever)");
                         System.out.print("Opcao: ");
 
                         int catOpcao = Integer.parseInt(scanner.nextLine());
@@ -118,7 +124,8 @@ public class Main {
                             case 3: nomeCategoria = "Limpeza urbana"; break;
                             case 4: nomeCategoria = "Saude"; break;
                             case 5: nomeCategoria = "Seguranca Escolar"; break;
-                            case 6:
+                            case 6: nomeCategoria = "Denuncia de Abuso/Irregularidade"; break;
+                            case 7:
                                 System.out.print("Digite a categoria desejada: ");
                                 nomeCategoria = scanner.nextLine();
                                 break;
@@ -183,11 +190,15 @@ public class Main {
                         break;
 
                     case 3:
+                        if (!usuarioAtual.isGestor()) {
+                            throw new RuntimeException("Acesso negado. Apenas Gestores podem listar todas as demandas da cidade.");
+                        }
+
                         List<Solicitacao> lista = servico.listar();
                         if (lista.isEmpty()) {
                             System.out.println("Ainda nao existem solicitacoes cadastradas.");
                         } else {
-                            System.out.println("\n--- Lista de Solicitacoes ---");
+                            System.out.println("\n--- Lista Geral de Solicitacoes (PAINEL GESTOR) ---");
                             for (Solicitacao s : lista) {
                                 System.out.println("[" + s.getProtocolo() + "] " + s.getCategoria().getNome() + " | " + s.getPrioridade() + " | Status: " + s.getStatus() + " | Autor: " + s.getUsuario().getNome());
                             }
@@ -195,6 +206,10 @@ public class Main {
                         break;
 
                     case 4:
+                        if (!usuarioAtual.isGestor()) {
+                            throw new RuntimeException("Acesso negado. Apenas Gestores podem alterar o status de uma solicitacao.");
+                        }
+
                         System.out.print("Digite o protocolo da solicitacao que deseja atualizar: ");
                         String protAtualizar = scanner.nextLine();
 
@@ -230,8 +245,10 @@ public class Main {
                 }
             } catch (IllegalArgumentException e) {
                 System.out.println("\n>>> ERRO DE VALIDACAO: " + e.getMessage());
+            } catch (RuntimeException e) {
+                System.out.println("\n>>> ERRO/ACESSO NEGADO: " + e.getMessage());
             } catch (Exception e) {
-                System.out.println("\n>>> ERRO: " + e.getMessage());
+                System.out.println("\n>>> ERRO DESCONHECIDO: " + e.getMessage());
             }
         }
 
