@@ -5,7 +5,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class Solicitacao {
+// 1. A classe agora implementa Comparable
+public class Solicitacao implements Comparable<Solicitacao> {
     private String protocolo;
     private String descricao;
     private String localizacao;
@@ -66,10 +67,20 @@ public class Solicitacao {
         this.status = novoStatus;
 
         if (this.historico == null) {
-            this.historico = new java.util.ArrayList<>();
+            this.historico = new ArrayList<>();
         }
 
         HistoricoStatus novoHistorico = new HistoricoStatus(novoStatus, responsavel, comentario);
         this.historico.add(novoHistorico);
+    }
+
+    // 2. Método adicionado para a inteligência da fila (Clean Code)
+    @Override
+    public int compareTo(Solicitacao outra) {
+        // A lógica do negócio dita que o prazo de SLA define a posição na fila
+        return Integer.compare(
+                this.getPrioridade().getPrazoSlaDias(),
+                outra.getPrioridade().getPrazoSlaDias()
+        );
     }
 }
