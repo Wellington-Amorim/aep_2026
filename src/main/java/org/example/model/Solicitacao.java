@@ -1,84 +1,124 @@
 package org.example.model;
 
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotBlank;
 
+@Entity
+@Table(name = "solicitacoes")
 public class Solicitacao {
-    private String protocolo;
+
+    @Id
+    private String codigo;
+
+    @NotBlank
+    private String categoria;
+
+    @NotBlank
+    private String prioridade;
+
+    @NotBlank
+    @Column(length = 1000)
     private String descricao;
+
+    private String status;
     private String localizacao;
-    private StatusSolicitacao status;
-    private Usuario usuario;
-    private Categoria categoria;
-    private List<HistoricoStatus> historico;
+    private String data;
+    private String sla;
+    private boolean anonimo;
+    private String nomeCidadao;
+    private String emailCidadao;
 
-    protected Solicitacao() {}
-
-    public Solicitacao(String protocolo, String descricao, String localizacao, StatusSolicitacao status, Usuario usuario, Categoria categoria, List<HistoricoStatus> historico) {
-        this.protocolo = protocolo;
-        this.descricao = descricao;
-        this.localizacao = localizacao;
-        this.status = status != null ? status : StatusSolicitacao.ABERTO;
-        this.usuario = usuario;
-        this.categoria = categoria;
-        this.historico = historico != null ? historico : new ArrayList<HistoricoStatus>();
+    public Solicitacao() {
     }
 
-    public String getProtocolo() {
-        return protocolo;
+    public String getCodigo() {
+        return codigo;
+    }
+
+    public void setCodigo(String codigo) {
+        this.codigo = codigo;
+    }
+
+    public String getCategoria() {
+        return categoria;
+    }
+
+    public void setCategoria(String categoria) {
+        this.categoria = categoria;
+    }
+
+    public String getPrioridade() {
+        return prioridade;
+    }
+
+    public void setPrioridade(String prioridade) {
+        this.prioridade = prioridade;
     }
 
     public String getDescricao() {
         return descricao;
     }
 
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
     public String getLocalizacao() {
         return localizacao;
     }
 
-    public StatusSolicitacao getStatus() {
-        return status;
+    public void setLocalizacao(String localizacao) {
+        this.localizacao = localizacao;
     }
 
-    public Usuario getUsuario() {
-        return usuario;
+    public String getData() {
+        return data;
     }
 
-    public Categoria getCategoria() {
-        return categoria;
+    public void setData(String data) {
+        this.data = data;
     }
 
-    public List<HistoricoStatus> getHistorico() {
-        return Collections.unmodifiableList(historico);
+    public String getSla() {
+        return sla;
     }
 
-    public void atualizarStatus(StatusSolicitacao novoStatus, String responsavel, String comentario) {
-        if (novoStatus == null) {
-            throw new RuntimeException("Status nao pode ser nulo");
-        }
+    public void setSla(String sla) {
+        this.sla = sla;
+    }
 
-        if (comentario == null || comentario.isBlank()) {
-            throw new RuntimeException("Comentario eh obrigatorio");
-        }
+    public boolean isAnonimo() {
+        return anonimo;
+    }
 
-        if (this.status == novoStatus) {
-            throw new RuntimeException("A solicitacao jah estah com esse status");
-        }
+    public void setAnonimo(boolean anonimo) {
+        this.anonimo = anonimo;
+    }
 
-        this.status = novoStatus;
+    public String getNomeCidadao() {
+        return nomeCidadao;
+    }
 
-        if (this.historico == null) {
-            this.historico = new java.util.ArrayList<>();
-        }
+    public void setNomeCidadao(String nomeCidadao) {
+        this.nomeCidadao = nomeCidadao;
+    }
 
-        HistoricoStatus novoHistorico = new HistoricoStatus(
-                novoStatus,
-                responsavel,
-                comentario
-        );
+    public String getEmailCidadao() {
+        return emailCidadao;
+    }
 
-        this.historico.add(novoHistorico);
+    public void setEmailCidadao(String emailCidadao) {
+        this.emailCidadao = emailCidadao;
     }
 }
