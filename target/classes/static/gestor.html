@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gestão - ObservaAção</title>
+<link rel="stylesheet" href="css/global.css">
+<link rel="stylesheet" href="css/gestor.css">
+</head>
+<body>
+
+<nav class="navbar" aria-label="Navegação principal">
+  <div class="logo">🏛️ ObservaAção | <span style="color: var(--text-dark);">Painel do Gestor</span></div>
+  <div class="nav-actions">
+    <span class="nav-text">Olá, Admin</span>
+    <button class="btn btn-outline" onclick="window.location.href='index.html'">Sair</button>
+  </div>
+</nav>
+
+<main class="dashboard-container">
+  <section class="kpi-grid">
+    <div class="kpi-card">
+      <h3>Novas Solicitações</h3>
+      <div class="kpi-value" style="color: var(--primary);">24</div>
+    </div>
+    <div class="kpi-card">
+      <h3>Em Andamento</h3>
+      <div class="kpi-value" style="color: var(--priority-media);">15</div>
+    </div>
+    <div class="kpi-card">
+      <h3>Resolvidas (Mês)</h3>
+      <div class="kpi-value" style="color: var(--priority-baixa);">142</div>
+    </div>
+  </section>
+
+  <section class="panel">
+    <div class="panel-header">
+      <h2>Fila de Atendimento</h2>
+      <div class="filters">
+        <select class="filter-select" id="filtroStatus" aria-label="Filtrar por Status">
+          <option value="">Status: Todos</option>
+          <option value="ABERTO">Aberto</option>
+          <option value="EM_ANDAMENTO">Em Andamento</option>
+          <option value="CONCLUIDO">Concluído</option>
+          <option value="REJEITADO">Rejeitado</option>
+        </select>
+        <select class="filter-select" id="filtroPrioridade" aria-label="Filtrar por Prioridade">
+          <option value="">Prioridade: Todas</option>
+          <option value="ALTA">Alta</option>
+          <option value="MEDIA">Média</option>
+          <option value="BAIXA">Baixa</option>
+        </select>
+        <button class="btn btn-primary btn-sm" id="btnAplicarFiltros">Aplicar</button>
+        <button class="btn btn-outline btn-sm" id="btnLimparFiltros">Limpar</button>
+      </div>
+    </div>
+
+    <table class="table-wrapper">
+      <thead>
+        <tr>
+          <th>Protocolo</th>
+          <th>Categoria</th>
+          <th>Prioridade</th>
+          <th>Status</th>
+          <th>Data</th>
+          <th>Ações</th>
+        </tr>
+      </thead>
+      <tbody>
+      </tbody>
+    </table>
+  </section>
+</main>
+
+<div class="modal-overlay" id="modalDespacho" role="dialog" aria-modal="true" aria-labelledby="tituloModalDespacho">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h2 id="tituloModalDespacho">Análise de Solicitação</h2>
+      <button class="btn-close" id="btnFecharModal" aria-label="Fechar janela">&times;</button>
+    </div>
+    
+    <div class="modal-body">
+      <div id="detalhesProtocoloModal" class="mb-1"></div>
+
+      <form id="formDespacho" class="d-flex-col">
+        <div class="input-group mb-0">
+          <label for="novoStatus">Alterar Status</label>
+          <select id="novoStatus" required aria-required="true">
+            <option value="">Selecione...</option>
+            <option value="EM_ANDAMENTO">Em Andamento</option>
+            <option value="CONCLUIDO">Concluído</option>
+            <option value="REJEITADO">Rejeitado</option>
+          </select>
+        </div>
+
+        <div class="input-group mb-0">
+          <label for="justificativa">Justificativa da Ação</label>
+          <textarea id="justificativa" required aria-required="true" style="min-height: 100px; resize: vertical;"></textarea>
+        </div>
+
+        <button type="submit" class="btn btn-primary" id="btnSalvarAcao" disabled aria-disabled="true" style="padding: 1rem; margin-top: 0.5rem;">Salvar Alteração</button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<script src="js/repository.js"></script>
+<script src="js/gestor.js"></script>
+</body>
+</html>
