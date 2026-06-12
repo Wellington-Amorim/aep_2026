@@ -1,5 +1,5 @@
-const API_URL = 'http://localhost:8080/api/solicitacoes';
-const API_USUARIOS = 'http://localhost:8080/api/usuarios';
+const API_URL = '/api/solicitacoes';
+const API_USUARIOS = '/api/usuarios';
 
 function sanitizar(str) {
   if (!str) return '';
