@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Meu Painel - ObservaAção</title>
+<link rel="stylesheet" href="css/global.css">
+<link rel="stylesheet" href="css/home.css">
+</head>
+<body>
+
+<nav class="navbar" aria-label="Navegação principal">
+  <div class="logo">🏛️ ObservaAção</div>
+  <div class="nav-actions">
+    <span class="nav-text">Olá, Matheus</span>
+    <button class="btn btn-outline" id="btnSair">Sair</button>
+  </div>
+</nav>
+
+<main class="main-container">
+  <aside class="side-panel">
+    <div class="card">
+      <h2>Acompanhe seu Protocolo</h2>
+      <div class="search-group">
+        <input type="text" id="inputBusca" placeholder="Ex: REQ-2026-X">
+        <button class="btn btn-primary" id="btnBuscar">Buscar</button>
+      </div>
+    </div>
+    <div class="card">
+      <h2>Nova Demanda</h2>
+      <p>Registre um novo problema na sua região. Seu perfil já será vinculado automaticamente.</p>
+      <button class="btn btn-primary btn-full" id="btnNovoProtocolo">+ Novo Protocolo</button>
+    </div>
+  </aside>
+
+  <section class="feed-panel">
+    <h2>Minhas Solicitações</h2>
+    <table class="table-wrapper">
+      <thead>
+        <tr>
+          <th>Protocolo</th>
+          <th>Categoria</th>
+          <th>Prioridade</th>
+          <th>Status</th>
+          <th>Data</th>
+          <th>Ações</th>
+        </tr>
+      </thead>
+      <tbody>
+      </tbody>
+    </table>
+  </section>
+</main>
+
+<div class="modal-overlay" id="modalBusca" role="dialog" aria-modal="true" aria-labelledby="tituloModalBusca">
+  <div class="modal-content" style="max-width: 500px;">
+    <div class="modal-header">
+      <h2 id="tituloModalBusca">Detalhes do Protocolo</h2>
+      <button class="btn-close" id="btnFecharBusca" aria-label="Fechar janela">&times;</button>
+    </div>
+    <div class="modal-body" id="resultadoBuscaBody">
+    </div>
+  </div>
+</div>
+
+<script src="js/repository.js"></script>
+<script src="js/cidadao.js"></script>
+</body>
+</html>

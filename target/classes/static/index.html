@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ObservaAção - Início</title>
+<link rel="stylesheet" href="css/global.css">
+<link rel="stylesheet" href="css/home.css">
+</head>
+<body>
+
+<nav class="navbar" aria-label="Navegação principal">
+  <div class="logo">🏛️ ObservaAção</div>
+  <div class="nav-actions">
+    <button class="btn btn-outline" id="btnEntrar">Entrar</button>
+    <button class="btn btn-primary" id="btnAddConta">Criar Conta</button>
+  </div>
+</nav>
+
+<main class="main-container">
+  <aside class="side-panel">
+    <div class="card">
+      <h2>Acompanhe seu Protocolo</h2>
+      <div class="search-group">
+        <input type="text" id="inputBusca" placeholder="Ex: REQ-2026-X">
+        <button class="btn btn-primary" id="btnBuscar">Buscar</button>
+      </div>
+    </div>
+    <div class="card">
+      <h2>Nova Demanda</h2>
+      <p>Registre um novo problema na sua região de forma rápida e segura.</p>
+      <button class="btn btn-primary btn-full" id="btnNovoProtocolo">+ Novo Protocolo</button>
+    </div>
+  </aside>
+
+  <section class="feed-panel">
+    <h2>Solicitações Recentes</h2>
+    <table class="table-wrapper">
+      <thead>
+        <tr>
+          <th>Protocolo</th>
+          <th>Categoria</th>
+          <th>Prioridade</th>
+          <th>Descrição</th>
+        </tr>
+      </thead>
+      <tbody>
+      </tbody>
+    </table>
+  </section>
+</main>
+
+<div class="modal-overlay" id="modalLogin" role="dialog" aria-modal="true" aria-labelledby="tituloModalLogin">
+  <div class="modal-content" style="max-width: 400px;">
+    <div class="modal-header">
+      <h2 id="tituloModalLogin">Acesso ao Sistema</h2>
+      <button class="btn-close" id="btnFecharLogin" aria-label="Fechar janela">&times;</button>
+    </div>
+    <div class="modal-body">
+      <form id="formLogin" class="d-flex-col" novalidate>
+        <div class="input-group mb-0">
+          <label for="loginEmail">E-mail</label>
+          <input type="email" id="loginEmail" required aria-required="true">
+        </div>
+        <div class="input-group mb-0">
+          <label for="loginSenha">Senha</label>
+          <div class="password-wrapper">
+            <input type="password" id="loginSenha" required aria-required="true">
+            <button type="button" class="btn-toggle-password" aria-label="Mostrar senha" aria-pressed="false">👁️</button>
+          </div>
+        </div>
+        <button type="submit" class="btn btn-primary" style="padding: 1rem; margin-top: 1rem;">Entrar como Cidadão</button>
+        <div class="text-center" style="margin-top: 1rem;">
+          <a href="#" class="form-link link-gestor" id="linkGestor">Sou Gestor da Prefeitura</a>
+          <br>
+          <a href="#" class="form-link" id="linkCriarConta" style="margin-top: 0.5rem;">Não tem conta? Crie aqui</a>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="modalCadastro" role="dialog" aria-modal="true" aria-labelledby="tituloModalCadastro">
+  <div class="modal-content" style="max-width: 400px;">
+    <div class="modal-header">
+      <h2 id="tituloModalCadastro">Criar Nova Conta</h2>
+      <button class="btn-close" id="btnFecharCadastro" aria-label="Fechar janela">&times;</button>
+    </div>
+    <div class="modal-body">
+      <form id="formCadastro" class="d-flex-col" novalidate>
+        <div class="input-group mb-0">
+          <label for="cadNome">Nome Completo</label>
+          <input type="text" id="cadNome" required aria-required="true">
+        </div>
+        <div class="input-group mb-0">
+          <label for="cadEmail">E-mail</label>
+          <input type="email" id="cadEmail" required aria-required="true">
+        </div>
+        <div class="input-group mb-0">
+          <label for="cadSenha">Senha</label>
+          <div class="password-wrapper">
+            <input type="password" id="cadSenha" required aria-required="true" aria-describedby="senhaReqs">
+            <button type="button" class="btn-toggle-password" aria-label="Mostrar senha" aria-pressed="false">👁️</button>
+          </div>
+          <small id="senhaReqs" class="text-light-info" style="font-size: 0.8rem; margin-top: 0.25rem;">Mínimo de 8 caracteres, 1 maiúscula, 1 minúscula, 1 número e 1 caractere especial.</small>
+        </div>
+        <button type="submit" class="btn btn-primary" style="padding: 1rem; margin-top: 1rem;">Concluir Cadastro</button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="modalBusca" role="dialog" aria-modal="true" aria-labelledby="tituloModalBuscaHome">
+  <div class="modal-content" style="max-width: 500px;">
+    <div class="modal-header">
+      <h2 id="tituloModalBuscaHome">Detalhes do Protocolo</h2>
+      <button class="btn-close" id="btnFecharBusca" aria-label="Fechar janela">&times;</button>
+    </div>
+    <div class="modal-body" id="resultadoBuscaBody">
+    </div>
+  </div>
+</div>
+
+<script src="js/repository.js"></script>
+<script src="js/home.js"></script>
+</body>
+</html>
