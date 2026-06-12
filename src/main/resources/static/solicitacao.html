@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nova Solicitação - ObservaAção</title>
+<link rel="stylesheet" href="css/global.css">
+<link rel="stylesheet" href="css/solicitacao.css">
+</head>
+<body>
+
+<nav class="navbar" aria-label="Navegação principal">
+  <div class="logo">
+    <a href="javascript:history.back()" style="text-decoration: none; color: var(--primary);" aria-label="Voltar para a página anterior">&lt; Voltar</a>
+    <span style="margin-left: 1rem; color: var(--text-dark);">🏛️ ObservaAção</span>
+  </div>
+</nav>
+
+<main class="form-container">
+  <form class="card-form" id="solicitacaoForm" aria-labelledby="formTitulo">
+    <div class="form-header">
+      <h2 id="formTitulo">Criar Novo Protocolo</h2>
+      <p>Preencha os dados da sua demanda para análise da prefeitura.</p>
+    </div>
+
+    <div id="dadosPessoaisArea" class="input-row box-destaque mb-1">
+      <div class="input-group mb-0">
+        <label for="solNome">Nome Completo</label>
+        <input type="text" id="solNome" placeholder="Seu nome" aria-required="true">
+      </div>
+      <div class="input-group mb-0">
+        <label for="solEmail">E-mail</label>
+        <input type="email" id="solEmail" placeholder="Seu e-mail" aria-required="true">
+      </div>
+    </div>
+
+    <div class="input-group">
+      <label id="categoriaLabel">Categoria da Demanda</label>
+      <div class="category-grid" role="radiogroup" aria-labelledby="categoriaLabel">
+        <div class="category-card" data-value="Buraco na Via" tabindex="0" role="radio" aria-checked="false">
+          <span class="category-icon" aria-hidden="true">🕳️</span>
+          <span class="category-title">Buraco na Via</span>
+        </div>
+        <div class="category-card" data-value="Iluminação" tabindex="0" role="radio" aria-checked="false">
+          <span class="category-icon" aria-hidden="true">💡</span>
+          <span class="category-title">Iluminação</span>
+        </div>
+        <div class="category-card" data-value="Limpeza" tabindex="0" role="radio" aria-checked="false">
+          <span class="category-icon" aria-hidden="true">🧹</span>
+          <span class="category-title">Limpeza Urbana</span>
+        </div>
+        <div class="category-card" data-value="Outros" tabindex="0" role="radio" aria-checked="false">
+          <span class="category-icon" aria-hidden="true">📌</span>
+          <span class="category-title">Outros</span>
+        </div>
+      </div>
+      <input type="hidden" id="categoria" required>
+    </div>
+
+    <div class="input-group">
+      <label for="prioridade">Prioridade Percebida</label>
+      <select id="prioridade" required aria-required="true">
+        <option value="">Selecione...</option>
+        <option value="Baixa">Baixa (Pode esperar)</option>
+        <option value="Média">Média (Incomoda a região)</option>
+        <option value="Alta">Alta (Risco iminente)</option>
+      </select>
+    </div>
+    
+    <div id="slaInfo" class="box-destaque mb-1 d-none" aria-live="polite">
+      <p class="text-highlight">Prazo de Resolução Estimado (SLA): <span id="slaTexto"></span></p>
+    </div>
+
+    <div class="input-group">
+      <label for="localizacao">Localização</label>
+      <input type="text" id="localizacao" placeholder="Ex: Av. Principal, próximo ao nº 1000" required aria-required="true">
+    </div>
+
+    <label class="checkbox-group">
+      <input type="checkbox" id="anonimo">
+      <span style="font-weight: 500;">Desejo enviar de forma anônima</span>
+    </label>
+
+    <div class="alert-box" id="alertAnonimo" role="alert" aria-live="assertive">
+      Atenção: Por segurança, denúncias anônimas exigem no mínimo 20 caracteres detalhando o ocorrido.
+    </div>
+
+    <div class="input-group">
+      <label for="descricao">Descrição Completa</label>
+      <textarea id="descricao" placeholder="Detalhe o que está acontecendo..." required aria-required="true" aria-describedby="charCounter"></textarea>
+      <div class="char-counter" id="charCounter" aria-live="polite">0 caracteres</div>
+    </div>
+
+    <button type="submit" class="btn btn-primary btn-full" id="btnSubmit" disabled aria-disabled="true">
+      Gerar Protocolo e Enviar
+    </button>
+  </form>
+</main>
+
+<script src="js/repository.js"></script>
+<script src="js/solicitacao.js"></script>
+</body>
+</html>

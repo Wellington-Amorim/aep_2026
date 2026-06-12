@@ -1,86 +1,124 @@
 package org.example.model;
 
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotBlank;
 
-// 1. A classe agora implementa Comparable
-public class Solicitacao implements Comparable<Solicitacao> {
-    private String protocolo;
+@Entity
+@Table(name = "solicitacoes")
+public class Solicitacao {
+
+    @Id
+    private String codigo;
+
+    @NotBlank
+    private String categoria;
+
+    @NotBlank
+    private String prioridade;
+
+    @NotBlank
+    @Column(length = 1000)
     private String descricao;
+
+    private String status;
     private String localizacao;
-    private StatusSolicitacao status;
-    private Usuario usuario;
-    private Categoria categoria;
-    private Prioridade prioridade;
-    private LocalDateTime dataCriacao;
-    private List<HistoricoStatus> historico;
+    private String data;
+    private String sla;
+    private boolean anonimo;
+    private String nomeCidadao;
+    private String emailCidadao;
 
-    protected Solicitacao() {}
+    public Solicitacao() {
+    }
 
-    public Solicitacao(String protocolo, String descricao, String localizacao, StatusSolicitacao status, Usuario usuario, Categoria categoria, Prioridade prioridade, List<HistoricoStatus> historico) {
-        if (usuario != null && usuario.isAnonimo()) {
-            if (descricao == null || descricao.length() < 20) {
-                throw new IllegalArgumentException("Denuncias anonimas exigem uma descricao detalhada (minimo 20 caracteres) para prevencao de trotes.");
-            }
-            if (localizacao == null || localizacao.length() < 10) {
-                throw new IllegalArgumentException("Denuncias anonimas exigem uma localizacao mais especifica.");
-            }
-        }
+    public String getCodigo() {
+        return codigo;
+    }
 
-        this.protocolo = protocolo;
-        this.descricao = descricao;
-        this.localizacao = localizacao;
-        this.status = status != null ? status : StatusSolicitacao.ABERTO;
-        this.usuario = usuario;
+    public void setCodigo(String codigo) {
+        this.codigo = codigo;
+    }
+
+    public String getCategoria() {
+        return categoria;
+    }
+
+    public void setCategoria(String categoria) {
         this.categoria = categoria;
-        this.prioridade = prioridade != null ? prioridade : Prioridade.BAIXA;
-        this.dataCriacao = LocalDateTime.now();
-        this.historico = historico != null ? historico : new ArrayList<HistoricoStatus>();
     }
 
-    public String getProtocolo() { return protocolo; }
-    public String getDescricao() { return descricao; }
-    public String getLocalizacao() { return localizacao; }
-    public StatusSolicitacao getStatus() { return status; }
-    public Usuario getUsuario() { return usuario; }
-    public Categoria getCategoria() { return categoria; }
-    public Prioridade getPrioridade() { return prioridade; }
-    public LocalDateTime getDataCriacao() { return dataCriacao; }
-
-    public List<HistoricoStatus> getHistorico() {
-        return Collections.unmodifiableList(historico);
+    public String getPrioridade() {
+        return prioridade;
     }
 
-    public void atualizarStatus(StatusSolicitacao novoStatus, String responsavel, String comentario) {
-        if (novoStatus == null) {
-            throw new RuntimeException("Status nao pode ser nulo");
-        }
-        if (comentario == null || comentario.isBlank()) {
-            throw new RuntimeException("Comentario eh obrigatorio");
-        }
-        if (this.status == novoStatus) {
-            throw new RuntimeException("A solicitacao jah estah com esse status");
-        }
-
-        this.status = novoStatus;
-
-        if (this.historico == null) {
-            this.historico = new ArrayList<>();
-        }
-
-        HistoricoStatus novoHistorico = new HistoricoStatus(novoStatus, responsavel, comentario);
-        this.historico.add(novoHistorico);
+    public void setPrioridade(String prioridade) {
+        this.prioridade = prioridade;
     }
 
-    // 2. Método adicionado para a inteligência da fila (Clean Code)
-    @Override
-    public int compareTo(Solicitacao outra) {
-        // A lógica do negócio dita que o prazo de SLA define a posição na fila
-        return Integer.compare(
-                this.getPrioridade().getPrazoSlaDias(),
-                outra.getPrioridade().getPrazoSlaDias()
-        );
+    public String getDescricao() {
+        return descricao;
+    }
+
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public String getLocalizacao() {
+        return localizacao;
+    }
+
+    public void setLocalizacao(String localizacao) {
+        this.localizacao = localizacao;
+    }
+
+    public String getData() {
+        return data;
+    }
+
+    public void setData(String data) {
+        this.data = data;
+    }
+
+    public String getSla() {
+        return sla;
+    }
+
+    public void setSla(String sla) {
+        this.sla = sla;
+    }
+
+    public boolean isAnonimo() {
+        return anonimo;
+    }
+
+    public void setAnonimo(boolean anonimo) {
+        this.anonimo = anonimo;
+    }
+
+    public String getNomeCidadao() {
+        return nomeCidadao;
+    }
+
+    public void setNomeCidadao(String nomeCidadao) {
+        this.nomeCidadao = nomeCidadao;
+    }
+
+    public String getEmailCidadao() {
+        return emailCidadao;
+    }
+
+    public void setEmailCidadao(String emailCidadao) {
+        this.emailCidadao = emailCidadao;
     }
 }
