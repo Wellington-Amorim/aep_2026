@@ -1,32 +1,48 @@
-# ObservaAção - AEP 2026
+# 🏛️ ObservaAção - Plataforma de Gestão de Demandas Cidadãs
 
-Repositório do projeto ObservaAção.
+![Java](https://img.shields.io/badge/Java-21-orange.svg)
+![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.2.5-brightgreen.svg)
+![JavaScript](https://img.shields.io/badge/JavaScript-Vanilla-yellow.svg)
+![H2 Database](https://img.shields.io/badge/Database-H2%20In--Memory-blue.svg)
+[![Quality Gate Status](https://sonarcloud.io/project/roles?id=Matheus-Previato_aep_2026)
 
-## Sobre o Projeto
-O ObservaAção é um sistema de zeladoria urbana focado no cidadão. O objetivo é facilitar o registro de demandas públicas (como buracos na via, falta de iluminação ou denúncias de irregularidades) e dar transparência ao processo de atendimento. O projeto foi desenhado com base no **ODS 16** (Paz, Justiça e Instituições Eficazes).
+## 📌 Sobre o Projeto
+O **ObservaAção** é um sistema *Web* desenvolvido para o registro, acompanhamento e gestão de solicitações e problemas reportados pelos cidadãos à administração pública (como buracos na via, iluminação defeituosa, etc.). 
 
-Esta é a **1ª Entrega (Versão Beta)**. O sistema roda via linha de comando (CLI) e foi construído focado na aplicação de Programação Orientada a Objetos (POO) e Clean Code.
+O sistema foi desenhado com uma **arquitetura monolítica autossuficiente**, onde o *Back-End* (API RESTful) e o *Front-End* (páginas estáticas reativas) coexistem na mesma infraestrutura, eliminando a necessidade de servidores separados e problemas de compartilhamento de recursos (CORS).
 
-## Funcionalidades
-- **Cadastro de Solicitações:** Criação de chamados com categoria, descrição, localização e prioridade (que define o prazo alvo/SLA).
-- **Modo Anônimo e Prevenção de Abuso:** Opção de denúncia anônima com validações restritas (mínimo de caracteres) no construtor da classe para evitar trotes.
-- **Rastreio pelo Cidadão:** Busca de chamados através de número de protocolo gerado automaticamente.
-- **Painel do Gestor (Controle de Acesso):** Menu restrito a perfis administradores, permitindo listar todas as demandas e alterar o andamento.
-- **Auditoria de Status:** Toda mudança de status (Triagem, Em Execução, Resolvido, Encerrado) exige comentário obrigatório e registra um histórico imutável.
+## ⚙️ Arquitetura e Tecnologias
+- **Back-End:** Java com Spring Boot (Data JPA, Web, Validation).
+- **Front-End:** HTML5, CSS3 e JavaScript Vanilla (comunicação assíncrona via *Fetch API*). Integração direta no diretório `src/main/resources/static`.
+- **Banco de Dados:** H2 Database em memória (volátil para ambiente de desenvolvimento e testes).
+- **Validações:** Jakarta Bean Validation para integridade de dados e Expressões Regulares (Regex) para segurança de senhas.
 
-## Tecnologias Utilizadas
-- Java
-- Orientação a Objetos (Sem uso de frameworks nesta etapa)
-- Java Collections (Armazenamento de dados em memória)
+## 🚀 Funcionalidades Principais
+- **Registro e Autenticação:** Criação de usuários com validação rigorosa de segurança (mínimo de 8 caracteres, maiúsculas, minúsculas, números e símbolos).
+- **Submissão de Protocolos:** Criação de solicitações públicas, com ou sem identificação (modo anônimo).
+- **Painel do Cidadão:** Interface para acompanhamento em tempo real do status dos protocolos e cálculo dinâmico do SLA (Prazo de Atendimento).
+- **Painel do Gestor:** *Dashboard* reservado para análise, atualização de status (Em Andamento, Concluído, Rejeitado) e triagem de demandas.
 
-## Como Executar
-1. Clone este repositório no seu computador:
-   `git clone <https://github.com/Wellington-Amorim/aep_2026.git>`
-2. Abra a pasta do projeto na sua IDE (recomendado: IntelliJ IDEA ou Eclipse).
-3. Localize e execute a classe principal em: `src/main/java/org/example/Main.java`.
-4. O sistema iniciará no console/terminal da própria IDE.
-5. *Nota para testes:* O sistema já inicia com 9 Personas pré-carregadas na memória para facilitar a navegação entre perfis de Cidadão e Gestor.
+## 🛡️ Qualidade de Código e Segurança
+O repositório foi submetido a uma auditoria de análise estática através do **SonarCloud**, atingindo métricas de excelência na engenharia de software:
+- **Quality Gate:** Passed (Aprovado).
+- **Reliability & Security:** Nota **A** (0 vulnerabilidades detectadas, com sanitização manual de entradas DOM contra ataques XSS).
+- **Maintainability:** Nota **A** (Código estruturado sem repetições, respeitando o princípio DRY e com eliminação total de *zombie code*).
 
-## Equipe
+## 🛠️ Como Executar o Projeto
+Por se tratar de um monolito, a execução é extremamente simples, não requerendo *Live Servers* ou configurações complexas de ambiente.
+
+1. Clone o repositório para a sua máquina local:
+> git clone https://github.com/SEU_USUARIO/aep_2026.git
+
+2. Abra a pasta do projeto na sua IDE preferida (IntelliJ IDEA, Eclipse, ou VS Code com *Extension Pack for Java*).
+3. Execute a classe principal `ObservaAcaoApplication.java`.
+4. O servidor Tomcat embutido iniciará automaticamente na porta 8080.
+5. Abra o navegador web e acesse a interface através do endereço:
+> http://localhost:8080/index.html
+
+*Nota: Por utilizar o banco H2 em memória, os dados submetidos são reiniciados sempre que a aplicação é encerrada.*
+
+## 👤 Equipe
 - [Wellington Amorim](https://github.com/Wellington-Amorim)
 - [Matheus Previato](https://github.com/Matheus-Previato)
