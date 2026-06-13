@@ -4,7 +4,7 @@
 ![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.2.5-brightgreen.svg)
 ![JavaScript](https://img.shields.io/badge/JavaScript-Vanilla-yellow.svg)
 ![H2 Database](https://img.shields.io/badge/Database-H2%20In--Memory-blue.svg)
-![Quality Gate Status](https://sonarcloud.io/project/roles?id=Matheus-Previato_aep_2026)
+![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=SEU_PROJETO_AQUI&metric=alert_status)](https://sonarcloud.io/project/roles?id=Matheus-Previato_aep_2026)
 
 ## 📌 Sobre o Projeto
 O **ObservaAção** é um sistema *Web* desenvolvido para o registro, acompanhamento e gestão de solicitações e problemas reportados pelos cidadãos à administração pública (como buracos na via, iluminação defeituosa, etc.). 
